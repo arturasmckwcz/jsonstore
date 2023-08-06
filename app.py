@@ -4,7 +4,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-access_token = "dp:VjC,wp2sS1387u><A?Y~F+nk8haGDIBYQegTGnXxgrEYxLdSuuvjxHcNaRKEI"
+access_token = "any random string for auth"
 
 storage = {}
 
