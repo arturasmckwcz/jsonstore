@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, abort, request
 from flask_cors import CORS
 import os
 
@@ -12,10 +12,14 @@ if not access_token:
 storage = {}
 
 
+@app.before_request
+def check_auth():
+    if not is_auth(request):
+        abort(401)
+
+
 @app.route("/api/v1", methods=["GET", "POST"])
 def json_store():
-    if not is_auth(request):
-        return {"message": "Sorry."}
     if request.method == "POST":
         storage.update(request.json)
         return request.json
@@ -25,9 +29,6 @@ def json_store():
 
 @app.route("/api/v1/<path:key>", methods=["GET", "DELETE"])
 def json_by_key(key=""):
-    if not is_auth(request):
-        return {"message": "Sorry."}
-
     if not key in list(storage.keys()):
         return {key: ""}
 
