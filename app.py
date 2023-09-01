@@ -1,10 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-access_token = "any random string for auth"
+access_token = os.environ.get("JSONSTORE_ACCESS_TOKEN")
+if not access_token:
+    access_token = "any random string for auth"
 
 storage = {}
 
